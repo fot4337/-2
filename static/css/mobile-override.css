@@ -1,0 +1,418 @@
+  /* delivery-info: скрыть только на мобильных */
+  @media screen and (max-width: 386px) {
+    .delivery-info {
+      display: none !important;
+    }
+  }
+/* Мобильные стили — только для экранов до 386px */
+@media screen and (max-width: 386px) {
+  body {
+    font-size: 14px;
+    width: 100%;
+    max-width: 386px;
+    margin: 0 auto;
+    overflow-x: hidden;
+  }
+  .header-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 4px 6px 4px;
+    gap: 6px;
+    width: 100vw;
+    max-width: 386px !important;
+  }
+  .logo {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 0;
+  }
+  .search-bar {
+    width: 95%;
+    margin: 5px 0;
+  }
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 0;
+  }
+  .delivery-info-desktop {
+    display: none;
+  }
+  .categories {
+    position: fixed !important;
+    top: 56px; /* высота шапки */
+    left: 0;
+    width: 386px !important;
+    z-index: 1001;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(33,150,243,0.07);
+    border-bottom: 2px solid #2196F3;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .categories-list {
+    flex-wrap: nowrap;
+    padding: 5px;
+  }
+  .category-item {
+    flex: 0 0 auto;
+    padding: 5px 10px;
+    margin: 0 5px;
+    white-space: nowrap;
+  }
+  .filters-container {
+    flex-direction: column;
+    padding: 5px;
+  }
+  .filter-block {
+    width: 100%;
+    margin: 5px 0;
+  }
+  /* Центрирование и ограничение ширины карточки товара */
+  .main-content, #productsContainer {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+  .product-card {
+    width: 98% !important;
+    max-width: 370px !important;
+    min-width: 0 !important;
+    margin: 10px auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+  }
+  .product-image {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto 8px auto !important;
+  }
+  html, body {
+    overflow-x: hidden !important;
+  }
+  .product-image {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    object-fit: contain;
+  }
+  .product-info {
+    padding: 10px;
+  }
+  .product-title {
+    font-size: 16px;
+  }
+  .product-desc {
+    font-size: 12px;
+  }
+  .product-specs {
+    font-size: 11px;
+    flex-wrap: wrap;
+  }
+  .product-bottom {
+    flex-direction: column;
+  }
+  .product-price {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  .product-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .product-actions button {
+    width: 100%;
+    margin: 3px 0;
+    padding: 8px 5px;
+    font-size: 12px;
+  }
+  .sidebar {
+    width: 80%;
+    max-width: 300px;
+  }
+  .footer-content {
+    flex-direction: column;
+    padding: 10px;
+  }
+  .footer-section {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .menu-btn {
+    display: block;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #2196F3;
+    color: white;
+    font-size: 20px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  }
+  .advantages {
+    flex-direction: column;
+  }
+  .advantage-item {
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+/* Mobile-specific styles for 386x640 resolution */
+@media screen and (max-width: 1000px) {
+  /* Фиксированные размеры для мобильной версии 386x640 */
+  html, body {
+    width: 386px !important;
+    min-width: 386px !important;
+    max-width: 386px !important;
+    height: 640px !important;
+    min-height: 640px !important;
+    max-height: 640px !important;
+    margin: 0 auto !important;
+    overflow: auto !important;
+    box-sizing: border-box;
+    background: #fff;
+  }
+  body {
+    font-size: 14px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Прозрачная и закреплённая шапка */
+  .header {
+    background: transparent !important;
+    box-shadow: none !important;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 386px !important;
+    z-index: 1002;
+    transition: transform 0.3s cubic-bezier(.4,0,.2,1), opacity 0.3s cubic-bezier(.4,0,.2,1);
+  }
+  .categories {
+    position: fixed !important;
+    top: 56px; /* высота шапки, скорректируйте при необходимости */
+    left: 0;
+    width: 386px !important;
+    z-index: 1001;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(33,150,243,0.07);
+    border-bottom: 2px solid #2196F3;
+  }
+  .main-content, .main {
+    margin-top: 110px !important; /* высота header + categories */
+  }
+  .gift-card-btn {
+    display: flex !important;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    padding: 6px 10px;
+    background: #fff;
+    border: 1px solid #2196F3;
+    border-radius: 18px;
+    color: #2196F3;
+    box-shadow: 0 2px 8px rgba(33,150,243,0.07);
+    transition: background 0.2s, color 0.2s;
+  }
+  .gift-card-btn i {
+    font-size: 15px;
+  }
+  .gift-card-btn span {
+    display: inline;
+  }
+  .header.header--hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .header-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 4px 6px 4px;
+    gap: 6px;
+    width: 100vw;
+    max-width: 386px !important;
+  }
+  .logo {
+    margin-bottom: 10px;
+  }
+  .search-bar {
+    width: 95%;
+    margin: 5px 0;
+  }
+
+  .logo {
+    margin-bottom: 10px;
+  }
+
+  .search-bar {
+    width: 95%;
+    margin: 5px 0;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 10px;
+  }
+
+  /* Hide desktop delivery info */
+  .delivery-info-desktop {
+    display: none;
+  }
+
+  /* Categories adjustments */
+  .categories {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .categories-list {
+    flex-wrap: nowrap;
+    padding: 5px;
+  }
+
+  .category-item {
+    flex: 0 0 auto;
+    padding: 5px 10px;
+    margin: 0 5px;
+    white-space: nowrap;
+  }
+
+  /* Filters adjustments */
+  .filters-container {
+    flex-direction: column;
+    padding: 5px;
+  }
+
+  .filter-block {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  /* Product card adjustments */
+  .product-card {
+    width: 95%;
+    margin: 10px auto;
+    flex-direction: column;
+  }
+
+  .product-image {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    object-fit: contain;
+  }
+
+  .product-info {
+    padding: 10px;
+  }
+
+  .product-title {
+    font-size: 16px;
+  }
+
+  .product-desc {
+    font-size: 12px;
+  }
+
+  .product-specs {
+    font-size: 11px;
+    flex-wrap: wrap;
+  }
+
+  .product-bottom {
+    flex-direction: column;
+  }
+
+  .product-price {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  .product-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .product-actions button {
+    width: 100%;
+    margin: 3px 0;
+    padding: 8px 5px;
+    font-size: 12px;
+  }
+
+  /* Sidebar adjustments */
+  .sidebar {
+    width: 80%;
+    max-width: 300px;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100vh;
+    background: #fff;
+    box-shadow: 2px 0 8px rgba(33,150,243,0.07);
+    z-index: 2000;
+    transition: left 0.3s cubic-bezier(.4,0,.2,1);
+    overflow-y: auto;
+    display: block;
+  }
+  .sidebar.active {
+    left: 0;
+  }
+
+  /* Footer adjustments */
+  .footer-content {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .footer-section {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  /* Make menu button more visible */
+  .menu-btn {
+    display: block;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #2196F3;
+    color: white;
+    font-size: 20px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  }
+
+  /* Advantages section */
+  .advantages {
+    flex-direction: column;
+  }
+
+  .advantage-item {
+    width: 100%;
+    margin: 5px 0;
+  }
+}
