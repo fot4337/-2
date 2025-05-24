@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои карты - TechnoLife</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="static/css/mobile-override.css">
+    <link rel="stylesheet" href="static/css/card-attach.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<header class="header">
+    <div class="header-content">
+        <a href="index.mobile.html" class="logo">
+            <img src="images/logo.png" alt="TechnoLife">
+            <span class="logo-text">TechnoLife</span>
+        </a>
+        <div class="header-actions">
+            <button class="action-btn" onclick="location.href='login.html'"><i class="fas fa-user"></i></button>
+            <button class="action-btn" onclick="location.href='cart.mobile.html'"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></button>
+        </div>
+    </div>
+</header>
+<main>
+    <div class="card-list" id="cardList">
+        <!-- Список карт будет добавлен скриптом -->
+    </div>
+    <div class="card-form" id="cardFormBlock">
+        <!-- Форма добавления карты будет добавлена скриптом -->
+    </div>
+</main>
+<script src="static/js/card-security.js"></script>
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Контакты</h4>
+            <p>Телефон: +7 (777) 123-45-67</p>
+            <p>Email: info@technolife.kz</p>
+        </div>
+        <div class="footer-section">
+            <h4>Адреса магазинов</h4>
+            <p>г. Алматы, ул. Абая, 150</p>
+            <p>г. Астана, пр. Республики, 45</p>
+        </div>
+        <div class="footer-section">
+            <h4>Мы в соцсетях</h4>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

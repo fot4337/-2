@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechnoLife — Мобильная версия</title>
+    <link rel="stylesheet" href="static/css/mobile-override.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: #f7f7f7; margin: 0; font-family: system-ui, Arial, sans-serif; }
+        .mobile-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: #fff; box-shadow: 0 2px 8px #0001; }
+        .mobile-header .logo { display: flex; align-items: center; text-decoration: none; color: #222; }
+        .mobile-header .logo img { height: 36px; margin-right: 8px; }
+        .mobile-header .logo-text { font-weight: bold; font-size: 1.2em; }
+        .mobile-header .header-actions { display: flex; gap: 10px; }
+        .mobile-header .action-btn { background: none; border: none; font-size: 1.3em; color: #333; padding: 6px; }
+        .bonus-cards-mobile { margin: 10px 0 0 0; text-align: center; }
+        .gift-card-btn { background: #f5f5f5; border: none; border-radius: 8px; padding: 8px 18px; font-size: 1em; color: #333; display: inline-flex; align-items: center; gap: 7px; }
+        .categories-list { display: flex; overflow-x: auto; gap: 8px; padding: 10px 8px; background: #fff; margin: 10px 0; }
+        .category-item { flex: 0 0 auto; background: #eee; border-radius: 16px; padding: 7px 16px; text-decoration: none; color: #222; font-size: 0.98em; }
+        .category-item.active, .category-item:active { background: #4CAF50; color: #fff; }
+        .delivery-info { margin: 10px 0; padding: 0 10px; }
+        .delivery-item { background: #fff; border-radius: 8px; margin-bottom: 7px; padding: 8px 10px; font-size: 0.98em; display: flex; align-items: center; gap: 8px; }
+        .delivery-item.highlight { font-weight: bold; }
+        .main-content { padding: 0 6px; }
+        .product-card { background: #fff; border-radius: 10px; margin-bottom: 14px; box-shadow: 0 2px 8px #0001; display: flex; flex-direction: column; align-items: center; padding: 10px; }
+        .product-image { width: 100%; max-width: 220px; border-radius: 8px; margin-bottom: 8px; }
+        .product-title { font-size: 1.1em; margin: 0 0 4px 0; text-align: center; }
+        .product-desc { font-size: 0.97em; color: #555; margin: 0 0 6px 0; text-align: center; }
+        .product-specs { font-size: 0.92em; color: #888; margin-bottom: 6px; text-align: center; }
+        .product-bottom { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 6px; }
+        .product-price { font-weight: bold; color: #4CAF50; font-size: 1.1em; }
+        .product-actions { display: flex; gap: 6px; }
+        .btn-buy, .btn-details, .btn-fav { border: none; border-radius: 6px; padding: 6px 10px; font-size: 0.97em; }
+        .btn-buy { background: #4CAF50; color: #fff; }
+        .btn-details { background: #2196F3; color: #fff; }
+        .btn-fav { background: #eee; color: #333; }
+        .advantages { display: flex; flex-direction: column; gap: 10px; margin: 18px 0; padding: 0 10px; }
+        .advantage-item { background: #fff; border-radius: 8px; padding: 10px; display: flex; align-items: center; gap: 10px; }
+        .advantage-item i { font-size: 1.3em; color: #4CAF50; }
+        .advantage-item h3 { margin: 0; font-size: 1em; }
+        .advantage-item p { margin: 0; font-size: 0.95em; color: #555; }
+        footer { background: #fff; border-top: 1px solid #eee; padding: 14px 10px; font-size: 0.97em; color: #333; text-align: center; }
+        @media (min-width: 800px) { body { max-width: 480px; margin: 0 auto; } }
+    </style>
+</head>
+<body>
+    <header class="mobile-header">
+        <a href="/" class="logo">
+            <img src="images/logo.png" alt="TechnoLife">
+            <span class="logo-text">TechnoLife</span>
+        </a>
+        <div class="header-actions">
+            <button class="action-btn" onclick="location.href='personal-account.html'"><i class="fas fa-user"></i></button>
+            <button class="action-btn" onclick="location.href='cart.html'"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></button>
+        </div>
+    </header>
+    <script src="static/js/index.js"></script>
+    <div class="bonus-cards-mobile"><button class="gift-card-btn" onclick="location.href='gift-cards.html'"><i class="fas fa-gift"></i><span>Подарочные карты</span></button></div>
+    <div class="categories-list">
+        <a href="#" class="category-item active" data-category="all">Все товары</a>
+        <a href="#" class="category-item" data-category="Холодильники">Холодильники</a>
+        <a href="#" class="category-item" data-category="Стиральные машины">Стиральные машины</a>
+        <a href="#" class="category-item" data-category="Посудомоечные машины">Посудомоечные машины</a>
+        <a href="#" class="category-item" data-category="Духовые шкафы">Духовые шкафы</a>
+        <a href="#" class="category-item" data-category="Микроволновки">Микроволновки</a>
+        <a href="#" class="category-item" data-category="Пылесосы">Пылесосы</a>
+        <a href="#" class="category-item" data-category="Кофемашины">Кофемашины</a>
+        <a href="#" class="category-item" data-category="Мелкая техника">Мелкая техника</a>
+    </div>
+    <div class="delivery-info">
+        <div class="delivery-item highlight"><i class="fas fa-truck"></i><span>Бесплатная доставка по всему Казахстану при заказе от 50 000 ₸</span></div>
+        <div class="delivery-item highlight"><i class="fas fa-globe-asia"></i><span>Доставка по всему миру! Работаем со всеми странами</span></div>
+        <div class="delivery-item"><i class="fas fa-clock"></i><span>Доставка в течение 1-3 дней</span></div>
+        <div class="delivery-item"><i class="fas fa-shield-alt"></i><span>Официальная гарантия производителя</span></div>
+    </div>
+    <main class="main-content">
+        <!-- Все карточки товаров из index.html -->
+        <div class="product-card" data-category="Холодильники">
+    <img src="images/download.jpg" alt="Холодильник Samsung RF50" class="product-image" data-category="Холодильники">
+    <div class="product-info">
+      <h3 class="product-title">Холодильник Samsung RF50</h3>
+      <p class="product-desc">Двухкамерный холодильник с системой No Frost, инверторный компрессор, зона свежести, LED освещение</p>
+      <div class="product-specs">
+        <span>Объём: 500 л</span> |
+        <span>Класс: A++</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">799 990 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Стиральные машины">
+    <img src="images/str.jpg" alt="Стиральная машина LG F2J3NS0W" class="product-image" data-category="Стиральные машины">
+    <div class="product-info">
+      <h3 class="product-title">Стиральная машина LG F2J3NS0W</h3>
+      <p class="product-desc">Автоматическая стиральная машина с прямым приводом, 6.5 кг загрузки, 1200 об/мин</p>
+      <div class="product-specs">
+        <span>Загрузка: 6.5 кг</span> |
+        <span>Скорость: 1200 об/мин</span> |
+        <span>Класс: A++</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">199 990 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Микроволновки">
+    <img src="images/mkr.jpg" alt="Микроволновая печь Panasonic NN-GT261W" class="product-image" data-category="Микроволновки">
+    <div class="product-info">
+      <h3 class="product-title">Микроволновая печь Panasonic NN-GT261W</h3>
+      <p class="product-desc">Микроволновка с грилем, 800 Вт, объем 20 л, электронное управление</p>
+      <div class="product-specs">
+        <span>Мощность: 800 Вт</span> |
+        <span>Объём: 20 л</span> |
+        <span>Гриль: Есть</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">49 990 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Посудомоечные машины">
+    <img src="images/st.jpg" alt="Посудомоечная машина Bosch SMS44DW00R" class="product-image" data-category="Посудомоечные машины">
+    <div class="product-info">
+      <h3 class="product-title">Посудомоечная машина Bosch SMS44DW00R</h3>
+      <p class="product-desc">На 12 комплектов посуды, класс А++, 5 программ мойки, тихий инверторный мотор</p>
+      <div class="product-specs">
+        <span>Вместимость: 12 комплектов</span> |
+        <span>Класс: A++</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">241 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Пылесосы">
+    <img src="images/1.jpg" alt="Пылесос Dyson V8 Absolute" class="product-image" data-category="Пылесосы">
+    <div class="product-info">
+      <h3 class="product-title">Пылесос Dyson V8 Absolute</h3>
+      <p class="product-desc">Беспроводной пылесос, до 40 минут работы, мощный циклонный фильтр</p>
+      <div class="product-specs">
+        <span>Мощность: 115 AW</span> |
+        <span>Фильтрация: HEPA</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">164 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Кофемашины">
+    <img src="images/2.jpg" alt="Кофемашина DeLonghi ECAM 22.110.B" class="product-image" data-category="Кофемашины">
+    <div class="product-info">
+      <h3 class="product-title">Кофемашина DeLonghi ECAM 22.110.B</h3>
+      <p class="product-desc">Автоматическая кофемашина с капучинатором, встроенная кофемолка</p>
+      <div class="product-specs">
+        <span>Давление: 15 бар</span> |
+        <span>Объём: 1.8 л</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">192 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Холодильники">
+    <img src="images/3.jpg" alt="Холодильник LG DoorCooling+ GA-B459CLWL" class="product-image" data-category="Холодильники">
+    <div class="product-info">
+      <h3 class="product-title">Холодильник LG DoorCooling+ GA-B459CLWL</h3>
+      <p class="product-desc">Двухкамерный холодильник с технологией DoorCooling+, линейный инвертор</p>
+      <div class="product-specs">
+        <span>Объём: 341 л</span> |
+        <span>Класс: A+</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">302 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Стиральные машины">
+    <img src="images/4.jpg" alt="Стиральная машина Bosch WAN24260OE" class="product-image" data-category="Стиральные машины">
+    <div class="product-info">
+      <h3 class="product-title">Стиральная машина Bosch WAN24260OE</h3>
+      <p class="product-desc">Узкая стиральная машина с технологией ActiveWater, 8 кг загрузки</p>
+      <div class="product-specs">
+        <span>Загрузка: 8 кг</span> |
+        <span>Класс: A+++</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">219 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Духовые шкафы">
+    <img src="images/5.jpg" alt="Духовой шкаф Electrolux EOE7P31X" class="product-image" data-category="Духовые шкафы">
+    <div class="product-info">
+      <h3 class="product-title">Духовой шкаф Electrolux EOE7P31X</h3>
+      <p class="product-desc">Электрический духовой шкаф с паром, сенсорное управление</p>
+      <div class="product-specs">
+        <span>Объём: 72 л</span> |
+        <span>Класс: A+</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">274 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Мелкая техника">
+    <img src="images/6.jpg" alt="Варочная панель Gorenje ECT641BSC" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Варочная панель Gorenje ECT641BSC</h3>
+      <p class="product-desc">Электрическая варочная панель, стеклокерамика, сенсорное управление</p>
+      <div class="product-specs">
+        <span>Зон: 4</span> |
+        <span>Мощность: 6500 Вт</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">109 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Мелкая техника">
+    <img src="images/7.jpg" alt="Блендер Philips HR3652/00" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Блендер Philips HR3652/00</h3>
+      <p class="product-desc">Стационарный блендер с технологией ProBlend 6 3D, 1400 Вт</p>
+      <div class="product-specs">
+        <span>Объём: 2 л</span> |
+        <span>Мощность: 1400 Вт</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">49 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Мелкая техника">
+    <img src="images/8.jpg" alt="Мультиварка Redmond RMC-M90" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Мультиварка Redmond RMC-M90</h3>
+      <p class="product-desc">Мультиварка с 45 программами, LED дисплей, 5 л</p>
+      <div class="product-specs">
+        <span>Объём: 5 л</span> |
+        <span>Программ: 45</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">43 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Пылесосы">
+    <img src="images/9.jpg" alt="Робот-пылесос Xiaomi Mi Robot Vacuum-Mop 2" class="product-image" data-category="Пылесосы">
+    <div class="product-info">
+      <h3 class="product-title">Робот-пылесос Xiaomi Mi Robot Vacuum-Mop 2</h3>
+      <p class="product-desc">Умный робот-пылесос с влажной уборкой, построение карты помещения</p>
+      <div class="product-specs">
+        <span>Мощность: 2500 Па</span> |
+        <span>Батарея: 2600 мАч</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">137 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Мелкая техника">
+    <img src="images/10.jpg" alt="Утюг Tefal FV5648" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Утюг Tefal FV5648</h3>
+      <p class="product-desc">Паровой утюг с функцией автоотключения, мощность 2600 Вт</p>
+      <div class="product-specs">
+        <span>Мощность: 2600 Вт</span> |
+        <span>Пар: 50 г/мин</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">27 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Мелкая техника">
+    <img src="images/11.jpg" alt="Мясорубка Moulinex ME688832" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Мясорубка Moulinex ME688832</h3>
+      <p class="product-desc">Электрическая мясорубка, мощность 2200 Вт, 3 решетки</p>
+      <div class="product-specs">
+        <span>Мощность: 2200 Вт</span> |
+        <span>Производительность: 4.5 кг/мин</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">43 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Пылесосы">
+    <img src="images/12.jpg" alt="Пылесос Samsung VC18M21C0VN" class="product-image" data-category="Пылесосы">
+    <div class="product-info">
+      <h3 class="product-title">Пылесос Samsung VC18M21C0VN</h3>
+      <p class="product-desc">Пылесос с циклонным фильтром, мощность 1800 Вт</p>
+      <div class="product-specs">
+        <span>Мощность: 1800 Вт</span> |
+        <span>Объём: 1.5 л</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">38 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Мелкая техника">
+    <img src="images/13.jpg" alt="Миксер Bosch MFQ36460" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Миксер Bosch MFQ36460</h3>
+      <p class="product-desc">Ручной миксер, 5 скоростей, мощность 450 Вт</p>
+      <div class="product-specs">
+        <span>Мощность: 450 Вт</span> |
+        <span>Скоростей: 5</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">19 244 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Мелкая техника">
+    <img src="images/14.jpg" alt="Тостер Philips HD2582/90" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Тостер Philips HD2582/90</h3>
+      <p class="product-desc">Тостер на 2 ломтика, 8 режимов обжарки</p>
+      <div class="product-specs">
+        <span>Мощность: 830 Вт</span> |
+        <span>Режимов: 8</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">16 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Мелкая техника">
+    <img src="images/15.jpg" alt="Мультиварка Polaris PMC 0517AD" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Мультиварка Polaris PMC 0517AD</h3>
+      <p class="product-desc">Мультиварка с 16 программами, объем 5 л</p>
+      <div class="product-specs">
+        <span>Объём: 5 л</span> |
+        <span>Программ: 16</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">32 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Мелкая техника">
+    <img src="images/16.jpg" alt="Соковыжималка Scarlett SC-JE50S35" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Соковыжималка Scarlett SC-JE50S35</h3>
+      <p class="product-desc">Центрифужная соковыжималка, мощность 1200 Вт</p>
+      <div class="product-specs">
+        <span>Мощность: 1200 Вт</span> |
+        <span>Объём: 1 л</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">21 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Мелкая техника">
+    <img src="images/17.jpg" alt="Электрочайник Bosch TWK8611P" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Электрочайник Bosch TWK8611P</h3>
+      <p class="product-desc">Электрочайник с регулировкой температуры, объем 1.5 л</p>
+      <div class="product-specs">
+        <span>Объём: 1.5 л</span> |
+        <span>Мощность: 2400 Вт</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">27 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="Микроволновки">
+    <img src="images/18.jpg" alt="Микроволновка LG MS-2042DB" class="product-image" data-category="Микроволновки">
+    <div class="product-info">
+      <h3 class="product-title">Микроволновка LG MS-2042DB</h3>
+      <p class="product-desc">Микроволновая печь, объем 20 л, механическое управление</p>
+      <div class="product-specs">
+        <span>Объём: 20 л</span> |
+        <span>Мощность: 700 Вт</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">43 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card" data-category="">
+    <img src="images/19.jpg" alt="Пылесос Philips FC9350/01" class="product-image" data-category="Пылесосы">
+    <div class="product-info">
+      <h3 class="product-title">Пылесос Philips FC9350/01</h3>
+      <p class="product-desc">Пылесос с циклонной технологией, мощность 1800 Вт</p>
+      <div class="product-specs">
+        <span>Мощность: 1800 Вт</span> |
+        <span>Объём: 1.5 л</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">49 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/20.jpg" alt="Блендер Braun MQ 5200" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Блендер Braun MQ 5200</h3>
+      <p class="product-desc">Погружной блендер, мощность 1000 Вт, 21 скорость</p>
+      <div class="product-specs">
+        <span>Мощность: 1000 Вт</span> |
+        <span>Скоростей: 21</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">32 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/21.jpg" alt="Соковыжималка Philips HR1832/02" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Соковыжималка Philips HR1832/02</h3>
+      <p class="product-desc">Компактная соковыжималка, мощность 500 Вт</p>
+      <div class="product-specs">
+        <span>Мощность: 500 Вт</span> |
+        <span>Объём: 1.5 л</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">27 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/22.jpg" alt="Мультиварка Moulinex MK707832" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Мультиварка Moulinex MK707832</h3>
+      <p class="product-desc">Мультиварка с 45 программами, объем 5 л</p>
+      <div class="product-specs">
+        <span>Объём: 5 л</span> |
+        <span>Программ: 45</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">49 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/23.jpg" alt="Тостер Redmond RT-M403" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Тостер Redmond RT-M403</h3>
+      <p class="product-desc">Тостер на 2 ломтика, 7 режимов обжарки</p>
+      <div class="product-specs">
+        <span>Мощность: 900 Вт</span> |
+        <span>Режимов: 7</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">16 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/24.jpg" alt="Посудомоечная машина Hansa ZIM 476 H" class="product-image" data-category="Посудомоечные машины">
+    <div class="product-info">
+      <h3 class="product-title">Посудомоечная машина Hansa ZIM 476 H</h3>
+      <p class="product-desc">Встраиваемая, на 10 комплектов, 6 программ</p>
+      <div class="product-specs">
+        <span>Вместимость: 10 комплектов</span> |
+        <span>Класс: A++</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">164 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/25.jpg" alt="Варочная панель Bosch PKE611D17E" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Варочная панель Bosch PKE611D17E</h3>
+      <p class="product-desc">Стеклокерамика, 4 зоны, сенсорное управление</p>
+      <div class="product-specs">
+        <span>Зон: 4</span> |
+        <span>Мощность: 6600 Вт</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">142 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/26.jpg" alt="Духовой шкаф Gorenje BO6727E03X" class="product-image" data-category="Духовые шкафы">
+    <div class="product-info">
+      <h3 class="product-title">Духовой шкаф Gorenje BO6727E03X</h3>
+      <p class="product-desc">Электрический, объем 77 л, 11 режимов</p>
+      <div class="product-specs">
+        <span>Объём: 77 л</span> |
+        <span>Класс: A</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">219 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/27.jpg" alt="Стиральная машина Indesit BWUA 51051" class="product-image" data-category="Стиральные машины">
+    <div class="product-info">
+      <h3 class="product-title">Стиральная машина Indesit BWUA 51051</h3>
+      <p class="product-desc">5 кг, 1000 об/мин, 16 программ</p>
+      <div class="product-specs">
+        <span>Загрузка: 5 кг</span> |
+        <span>Класс: A+</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">126 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/28.jpg" alt="Пылесос LG VK76A02NTL" class="product-image" data-category="Пылесосы">
+    <div class="product-info">
+      <h3 class="product-title">Пылесос LG VK76A02NTL</h3>
+      <p class="product-desc">Пылесос с циклонным фильтром, мощность 2000 Вт</p>
+      <div class="product-specs">
+        <span>Мощность: 2000 Вт</span> |
+        <span>Объём: 1.5 л</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">43 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/29.jpg" alt="Кофемашина Philips EP1220/00" class="product-image" data-category="Кофемашины">
+    <div class="product-info">
+      <h3 class="product-title">Кофемашина Philips EP1220/00</h3>
+      <p class="product-desc">Автоматическая кофемашина, 15 бар, капучинатор</p>
+      <div class="product-specs">
+        <span>Давление: 15 бар</span> |
+        <span>Объём: 1.8 л</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">192 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/30.jpg" alt="Мясорубка Scarlett SC-MG45S55" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Мясорубка Scarlett SC-MG45S55</h3>
+      <p class="product-desc">Электрическая мясорубка, мощность 2000 Вт, 2 решетки</p>
+      <div class="product-specs">
+        <span>Мощность: 2000 Вт</span> |
+        <span>Производительность: 2 кг/мин</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">27 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/31.jpg" alt="Блендер Kitfort KT-1361" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Блендер Kitfort KT-1361</h3>
+      <p class="product-desc">Погружной блендер, мощность 800 Вт, 2 скорости</p>
+      <div class="product-specs">
+        <span>Мощность: 800 Вт</span> |
+        <span>Скоростей: 2</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">16 494 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/32.jpg" alt="Тостер Moulinex Subito LT260830" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Тостер Moulinex Subito LT260830</h3>
+      <p class="product-desc">Тостер на 2 ломтика, 7 режимов обжарки</p>
+      <div class="product-specs">
+        <span>Мощность: 850 Вт</span> |
+        <span>Режимов: 7</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">19 244 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/33.jpg" alt="Мультиварка REDMOND RMC-M25" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Мультиварка REDMOND RMC-M25</h3>
+      <p class="product-desc">Мультиварка с 16 программами, объем 5 л</p>
+      <div class="product-specs">
+        <span>Объём: 5 л</span> |
+        <span>Программ: 16</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">32 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/4.jpg" alt="Посудомоечная машина Beko DIS 25010" class="product-image" data-category="Посудомоечные машины">
+    <div class="product-info">
+      <h3 class="product-title">Посудомоечная машина Beko DIS 25010</h3>
+      <p class="product-desc">Встраиваемая, на 10 комплектов, 5 программ</p>
+      <div class="product-specs">
+        <span>Вместимость: 10 комплектов</span> |
+        <span>Класс: A+</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">164 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-card">
+    <img src="images/35.jpg" alt="Варочная панель Hansa BHCI65123030" class="product-image" data-category="Мелкая техника">
+    <div class="product-info">
+      <h3 class="product-title">Варочная панель Hansa BHCI65123030</h3>
+      <p class="product-desc">Стеклокерамика, 4 зоны, механическое управление</p>
+      <div class="product-specs">
+        <span>Зон: 4</span> |
+        <span>Мощность: 6500 Вт</span>
+      </div>
+      <div class="product-bottom">
+        <span class="product-price">98 994 ₸</span>
+        <div class="product-actions">
+          <button class="btn-buy">В корзину</button>
+          <button class="btn-details">Подробнее</button>
+          <button class="btn-fav">В избранное</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    </main>
+    <section class="advantages">
+        <div class="advantage-item"><i class="fas fa-credit-card"></i><h3>Удобная оплата</h3><p>Наличными, картой или в рассрочку</p></div>
+        <div class="advantage-item"><i class="fas fa-medal"></i><h3>Гарантия качества</h3><p>Только оригинальная техника</p></div>
+        <div class="advantage-item"><i class="fas fa-phone"></i><h3>Поддержка 24/7</h3><p>Всегда на связи</p></div>
+    </section>
+    <footer>
+        <div style="margin-bottom: 10px;">
+            <img src="images/logo.png" alt="TechnoLife" style="height:38px; margin-bottom: 6px;">
+        </div>
+        <div>Телефон: +7 (777) 123-45-67 | Email: info@technolife.kz</div>
+        <div>г. Алматы, ул. Абая, 150 | г. Астана, пр. Республики, 45</div>
+        <div>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-telegram"></i></a>
+        </div>
+    </footer>
+    <!-- Скрипты для мобильной версии -->
+    <script>
+    // Обратный редирект на десктопную версию, если ширина экрана больше 800px
+    if (window.innerWidth > 800) {
+        window.location.href = 'index.html';
+    }
+
+    // Счетчик корзины (пример, если хранится в localStorage)
+    function updateCartCount() {
+        var count = 0;
+        try {
+            var cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            count = cart.length;
+        } catch(e) {}
+        var el = document.querySelector('.cart-count');
+        if (el) el.textContent = count;
+    }
+    updateCartCount();
+
+    // Категории: фильтрация по товарам (только визуально, без ajax)
+    document.querySelectorAll('.category-item').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelectorAll('.category-item').forEach(function(b){b.classList.remove('active');});
+            btn.classList.add('active');
+            var cat = btn.getAttribute('data-category');
+            document.querySelectorAll('.product-card').forEach(function(card){
+                var cardCat = card.getAttribute('data-category');
+                // Если у .product-card нет data-category, ищем у img
+                if (!cardCat) {
+                    var img = card.querySelector('img[data-category]');
+                    if (img) cardCat = img.getAttribute('data-category');
+                }
+                if (cat === 'all' || cat === 'Все товары') {
+                    card.style.display = '';
+                } else if (cardCat === cat) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Кнопка "В корзину" (добавление в localStorage)
+    document.querySelectorAll('.btn-buy').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var card = btn.closest('.product-card');
+            var title = card.querySelector('.product-title').textContent;
+            var price = card.querySelector('.product-price').textContent;
+            var img = card.querySelector('img').getAttribute('src');
+            var item = {title, price, img};
+            var cart = [];
+            try { cart = JSON.parse(localStorage.getItem('cart') || '[]'); } catch(e){}
+            cart.push(item);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            btn.textContent = 'В корзине';
+            setTimeout(function(){ btn.textContent = 'В корзину'; }, 1200);
+        });
+    });
+
+    // Кнопка "Подробнее" — страница в разработке
+    document.querySelectorAll('.btn-details').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Красивое уведомление
+            var toast = document.createElement('div');
+            toast.textContent = 'Страница товара в разработке! Скоро появится.';
+            toast.style.position = 'fixed';
+            toast.style.left = '50%';
+            toast.style.top = '50%';
+            toast.style.transform = 'translate(-50%, -50%)';
+            toast.style.background = 'linear-gradient(90deg,#4CAF50,#2196F3)';
+            toast.style.color = '#fff';
+            toast.style.padding = '18px 28px';
+            toast.style.borderRadius = '14px';
+            toast.style.fontSize = '1.1em';
+            toast.style.boxShadow = '0 4px 24px #0003';
+            toast.style.zIndex = 9999;
+            toast.style.textAlign = 'center';
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s';
+            document.body.appendChild(toast);
+            setTimeout(function(){ toast.style.opacity = '1'; }, 10);
+            setTimeout(function(){ toast.style.opacity = '0'; setTimeout(function(){ toast.remove(); }, 350); }, 1800);
+        });
+    });
+
+    // Кнопка "В избранное" (пример, можно доработать)
+    document.querySelectorAll('.btn-fav').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            btn.classList.toggle('active');
+        });
+    });
+    </script>
+</body>
+</html>

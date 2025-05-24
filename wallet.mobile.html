@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой кошелёк - TechnoLife</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="static/css/mobile-override.css">
+    <link rel="stylesheet" href="static/css/wallet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<header class="header">
+    <div class="header-content">
+        <a href="index.mobile.html" class="logo">
+            <img src="images/logo.png" alt="TechnoLife">
+            <span class="logo-text">TechnoLife</span>
+        </a>
+        <div class="header-actions">
+            <button class="action-btn" onclick="location.href='login.html'"><i class="fas fa-user"></i></button>
+            <button class="action-btn" onclick="location.href='cart.mobile.html'"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></button>
+        </div>
+    </div>
+</header>
+<main>
+    <div class="wallet-container">
+        <div class="wallet-header">
+            <h1>Мой кошелёк</h1>
+            <div class="wallet-balance">0 ₸</div>
+            <span class="wallet-status">Стандартный статус</span>
+            <div class="bonus-info">
+                <i class="fas fa-gift"></i>
+                <span>Доступно бонусов: <strong>0</strong></span>
+            </div>
+        </div>
+        <div class="wallet-grid">
+            <div class="wallet-card linked-card">
+                <div class="card-header">
+                    <h3>Привязанная карта</h3>
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <div id="linkedCardInfo" class="card-info">
+                    <div class="card-number">Нет привязанной карты</div>
+                    <small>Перейдите в раздел "Мои карты" для привязки карты</small>
+                </div>
+                <button class="btn btn-outline" onclick="location.href='cards.mobile.html'" style="margin-top: 15px;">
+                    <i class="fas fa-plus"></i>
+                    Управление картами
+                </button>
+            </div>
+            <div class="wallet-card">
+                <div class="card-header">
+                    <h3>Пополнение</h3>
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <div class="card-content">
+                    <p id="topupMessage">Сначала привяжите карту для пополнения баланса</p>
+                </div>
+                <button class="btn btn-primary" onclick="showTopupModal()" id="topupBtn" disabled>
+                    <i class="fas fa-plus"></i>
+                    Пополнить
+                </button>
+            </div>
+        </div>
+        <div class="transaction-history">
+            <h2>История операций</h2>
+            <ul class="transaction-list" id="transactionList"></ul>
+        </div>
+    </div>
+    <div class="modal" id="topupModal">
+        <div class="modal-content">
+            <h2>Пополнение баланса</h2>
+            <form id="topupForm" onsubmit="handleTopup(event)">
+                <div class="form-group">
+                    <label for="amount">Сумма пополнения (₸)</label>
+                    <input type="number" id="amount" min="100" step="100" required>
+                </div>
+                <div class="form-group">
+                    <label>Карта списания</label>
+                    <div id="cardForPayment" class="card-info" style="background: #f8f8f8; color: #333;"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Пополнить</button>
+            </form>
+        </div>
+    </div>
+    <div class="notification" id="notification"></div>
+</main>
+<script src="static/js/wallet.js"></script>
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Контакты</h4>
+            <p>Телефон: +7 (777) 123-45-67</p>
+            <p>Email: info@technolife.kz</p>
+        </div>
+        <div class="footer-section">
+            <h4>Адреса магазинов</h4>
+            <p>г. Алматы, ул. Абая, 150</p>
+            <p>г. Астана, пр. Республики, 45</p>
+        </div>
+        <div class="footer-section">
+            <h4>Мы в соцсетях</h4>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

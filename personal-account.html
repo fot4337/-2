@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - TechnoLife</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/personal-account.css">
+    <link rel="stylesheet" href="static/css/mobile-override.css">
+    
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="TechnoLife">
+            <span class="logo-text">TechnoLife</span>
+        </a>
+        <button class="cart-btn" onclick="window.location.href='cart.html'">
+            <i class="fas fa-shopping-cart"></i>
+            Корзина
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+    </header>
+
+    <main>
+        <div class="dashboard-container" id="dashboardContainer">
+            <div class="profile-block" id="profileBlock" style="background:#fff; border-radius:15px; padding:24px 30px 18px 30px; margin-bottom:20px; box-shadow:0 2px 5px rgba(0,0,0,0.07); text-align:center;">
+                <div class="profile-title"><i class="fas fa-user-circle"></i> <span id="profileTitleText">Профиль пользователя</span></div>
+                <div id="profileName" class="profile-name"></div>
+                <div id="profileEmail" class="profile-email"></div>
+                <button id="authBtn" style="display:none; margin-top:14px; padding:7px 18px; border-radius:7px; background:#2196F3; color:#fff; border:none; font-size:1em; cursor:pointer;">Войти / Зарегистрироваться</button>
+            </div>
+            <!-- Модальное окно для ввода имени и показа пароля -->
+            <div id="modalOverlay" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45);">
+                <div id="modalWindow" style="background:#fff; border-radius:12px; max-width:95vw; width:350px; margin:60px auto 0 auto; padding:28px 24px 22px 24px; box-shadow:0 4px 24px rgba(0,0,0,0.18); position:relative;">
+                    <form id="modalNameForm" style="margin:0; display:block;">
+                        <label for="modalUserNameInput" style="font-weight:500;">Введите ваше имя:</label><br>
+                        <input type="text" id="modalUserNameInput" name="modalUserNameInput" required style="margin:14px 0 18px 0; padding:8px 14px; border-radius:7px; border:1px solid #bbb; width:100%; font-size:1em;">
+                        <button type="submit" style="padding:8px 22px; border-radius:7px; background:#2196F3; color:#fff; border:none; font-size:1em;">Сохранить</button>
+                    </form>
+                    <div id="modalPasswordBlock" style="display:none; margin-top:18px; text-align:center;">
+                        <div style="font-weight:bold;">Ваш сгенерированный пароль:</div>
+                        <div id="modalGeneratedPassword" style="font-size:1.2em; margin:10px 0 8px 0; letter-spacing:2px; word-break:break-all;"></div>
+                        <button id="copyPasswordBtn" style="padding:6px 16px; border-radius:6px; background:#eee; color:#333; border:none; margin-bottom:8px; cursor:pointer;">Скопировать</button>
+                        <div style="color:#d32f2f; font-size:0.98em;">Пожалуйста, запомните этот пароль! Он будет показан только один раз.</div>
+                    </div>
+                </div>
+            </div>
+            <!-- История заказов -->
+            <div class="dashboard-item" style="padding:24px 18px;">
+                <div class="dashboard-item-title"><i class="fas fa-history"></i> История заказов</div>
+                <div id="ordersHistory"></div>
+            </div>
+            <!-- История бонусов -->
+            <div class="dashboard-item" style="padding:24px 18px;">
+                <div class="dashboard-item-title"><i class="fas fa-gift"></i> История бонусов</div>
+                <div id="bonusesHistory"></div>
+            </div>
+            <a href="wallet.html" class="dashboard-item">
+                <i class="fas fa-wallet"></i>
+                <div class="dashboard-item-title">Кошелек</div>
+                <div class="dashboard-item-desc">Баланс и история операций</div>
+            </a>
+            <a href="cards.html" class="dashboard-item">
+                <i class="fas fa-credit-card"></i>
+                <div class="dashboard-item-title">Банковские карты</div>
+                <div class="dashboard-item-desc">Привязка и удаление карт</div>
+            </a>
+            <a href="bonuses.html" class="dashboard-item">
+                <i class="fas fa-gift"></i>
+                <div class="dashboard-item-title">Мои бонусы</div>
+                <div class="dashboard-item-desc">Бонусный счет и акции</div>
+            </a>
+            <a href="#" class="dashboard-item" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                <div class="dashboard-item-title">Выйти</div>
+                <div class="dashboard-item-desc">Завершить сеанс</div>
+            </a>
+            <!-- Модальное окно для входа по паролю -->
+            <div id="loginModalOverlay" style="display:none; position:fixed; z-index:1001; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45);">
+                <div id="loginModalWindow" style="background:#fff; border-radius:12px; max-width:95vw; width:350px; margin:60px auto 0 auto; padding:28px 24px 22px 24px; box-shadow:0 4px 24px rgba(0,0,0,0.18); position:relative;">
+                    <form id="loginModalForm" style="margin:0; display:block;">
+                        <label for="loginUserNameInput" style="font-weight:500;">Введите имя:</label><br>
+                        <input type="text" id="loginUserNameInput" name="loginUserNameInput" required style="margin:10px 0 16px 0; padding:8px 14px; border-radius:7px; border:1px solid #bbb; width:100%; font-size:1em;">
+                        <label for="loginPasswordInput" style="font-weight:500;">Введите пароль:</label><br>
+                        <input type="password" id="loginPasswordInput" name="loginPasswordInput" required style="margin:10px 0 18px 0; padding:8px 14px; border-radius:7px; border:1px solid #bbb; width:100%; font-size:1em;">
+                        <button type="submit" style="padding:8px 22px; border-radius:7px; background:#2196F3; color:#fff; border:none; font-size:1em;">Войти</button>
+                        <div id="loginError" style="color:#d32f2f; margin-top:10px; display:none;"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="static/js/personal-account.js"></script>
+    <script>
+        // Пример обновления количества товаров в корзине
+        function updateCartCountPA() {
+            const count = localStorage.getItem('cartCount') || '0';
+            document.getElementById('cartCount').textContent = count;
+        }
+        updateCartCountPA();
+        window.addEventListener('storage', updateCartCountPA);
+
+        // --- Модальное окно для имени и пароля ---
+        function generatePassword(length = 8) {
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
+            let pass = '';
+            for (let i = 0; i < length; i++) {
+                pass += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return pass;
+        }
+
+        function showModal() {
+            document.getElementById('modalOverlay').style.display = 'block';
+            document.getElementById('modalNameForm').style.display = 'block';
+            document.getElementById('modalPasswordBlock').style.display = 'none';
+            document.getElementById('modalUserNameInput').value = '';
+        }
+
+        function hideModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
+        }
+
+        function showProfileName(name) {
+            document.getElementById('profileName').textContent = name ? 'Здравствуйте, ' + name + '!' : '';
+        }
+
+
+        // --- МНОГОПОЛЬЗОВАТЕЛЬСКИЙ РЕЖИМ ---
+        // users = { userName1: password1, userName2: password2, ... }
+        let users = {};
+        try {
+            users = JSON.parse(localStorage.getItem('users')) || {};
+        } catch (e) { users = {}; }
+
+        let currentUser = localStorage.getItem('currentUser');
+
+        // Функция блокировки/разблокировки разделов
+        function setSectionsEnabled(enabled) {
+            const dashboard = document.getElementById('dashboardContainer');
+            const links = dashboard.querySelectorAll('.dashboard-item');
+            links.forEach(link => {
+                if (!enabled) {
+                    link.classList.add('disabled-link');
+                    link.onclick = function(e) { e.preventDefault(); };
+                    link.style.pointerEvents = 'none';
+                    link.style.opacity = '0.5';
+                } else {
+                    link.classList.remove('disabled-link');
+                    link.onclick = null;
+                    link.style.pointerEvents = '';
+                    link.style.opacity = '';
+                }
+            });
+        }
+
+        function setProfileTitleAuthMode() {
+            document.getElementById('profileTitleText').textContent = 'Войти / Зарегистрироваться';
+            document.getElementById('authBtn').style.display = 'inline-block';
+            document.getElementById('profileName').textContent = '';
+        }
+        function setProfileTitleUser(name) {
+            document.getElementById('profileTitleText').textContent = 'Профиль пользователя';
+            document.getElementById('authBtn').style.display = 'none';
+            showProfileName(name);
+        }
+
+        if (!currentUser) {
+            setProfileTitleAuthMode();
+            setSectionsEnabled(false);
+        } else {
+            setProfileTitleUser(currentUser);
+            setSectionsEnabled(true);
+        }
+
+        // Кнопка "Войти / Зарегистрироваться"
+        document.getElementById('authBtn').addEventListener('click', function() {
+            showModal();
+        });
+
+        // Обработка формы имени в модальном окне (регистрация нового пользователя)
+        document.getElementById('modalNameForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('modalUserNameInput').value.trim();
+            if (name) {
+                if (!users[name]) {
+                    // Новый пользователь — генерируем пароль
+                    const password = generatePassword();
+                    users[name] = password;
+                    localStorage.setItem('users', JSON.stringify(users));
+                    localStorage.setItem('currentUser', name);
+                    setProfileTitleUser(name);
+                    setSectionsEnabled(true);
+                    document.getElementById('modalGeneratedPassword').textContent = password;
+                    document.getElementById('modalPasswordBlock').style.display = 'block';
+                    document.getElementById('modalNameForm').style.display = 'none';
+                    sessionStorage.setItem('passwordShown', '1'); // <--- Критично! Только после регистрации
+                } else {
+                    // Имя уже занято
+                    alert('Пользователь с таким именем уже существует!');
+                }
+            }
+        });
+
+        // Кнопка "Скопировать пароль"
+        document.getElementById('copyPasswordBtn').addEventListener('click', function() {
+            const password = document.getElementById('modalGeneratedPassword').textContent;
+            if (password) {
+                navigator.clipboard.writeText(password);
+                this.textContent = 'Скопировано!';
+                setTimeout(() => { this.textContent = 'Скопировать'; }, 2000);
+            }
+        });
+
+        // (Блок показа пароля после регистрации удалён — теперь пароль показывается только после успешной регистрации)
+
+        // Закрытие модального окна по клику вне окна (опционально)
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideModal();
+            }
+        });
+
+
+        // Корректный выход из аккаунта (переход на форму входа)
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('currentUser');
+            sessionStorage.removeItem('passwordShown');
+            setProfileTitleAuthMode();
+            setSectionsEnabled(false);
+            document.getElementById('loginModalOverlay').style.display = 'block';
+            document.getElementById('loginModalForm').reset();
+            document.getElementById('loginError').style.display = 'none';
+        });
+
+        // Обработка формы входа по имени и паролю (многопользовательский режим)
+        document.getElementById('loginModalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('loginUserNameInput').value.trim();
+            const password = document.getElementById('loginPasswordInput').value;
+            users = JSON.parse(localStorage.getItem('users')) || {};
+            if (name && password && users[name] && users[name] === password) {
+                // Вход успешен
+                localStorage.setItem('currentUser', name);
+                setProfileTitleUser(name);
+                setSectionsEnabled(true);
+                document.getElementById('loginModalOverlay').style.display = 'none';
+            } else {
+                document.getElementById('loginError').textContent = 'Неверное имя или пароль!';
+                document.getElementById('loginError').style.display = 'block';
+            }
+        });
+
+        // Закрытие модального окна входа по клику вне окна
+        document.getElementById('loginModalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

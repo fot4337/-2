@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой кошелек - TechnoLife</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/wallet.css">
+    <link rel="stylesheet" href="static/css/mobile-override.css">
+    
+</head>
+<body>
+<header class="header">
+    <div class="header-content">
+        <button class="back-btn" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i>
+            Назад
+        </button>
+        <a href="index.html" class="logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/1682/1682308.png" alt="TechnoLife">
+            <span>TechnoLife</span>
+        </a>
+    </div>
+</header>
+
+<div class="wallet-container">
+    <div class="wallet-header">
+        <h1>Мой кошелек</h1>
+        <div class="wallet-balance">0 ₸</div>
+        <span class="wallet-status">Стандартный статус</span>
+        <div class="bonus-info">
+            <i class="fas fa-gift"></i>
+            <span>Доступно бонусов: <strong>0</strong></span>
+        </div>
+    </div>
+
+    <div class="wallet-grid">
+        <div class="wallet-card linked-card">
+            <div class="card-header">
+                <h3>Привязанная карта</h3>
+                <i class="fas fa-credit-card"></i>
+            </div>
+            <div id="linkedCardInfo" class="card-info">
+                <div class="card-number">Нет привязанной карты</div>
+                <small>Перейдите в раздел "Мои карты" для привязки карты</small>
+            </div>
+            <button class="btn btn-outline" onclick="location.href='cards.html'" style="margin-top: 15px;">
+                <i class="fas fa-plus"></i>
+                Управление картами
+            </button>
+        </div>
+
+        <div class="wallet-card">
+            <div class="card-header">
+                <h3>Пополнение</h3>
+                <i class="fas fa-wallet"></i>
+            </div>
+            <div class="card-content">
+                <p id="topupMessage">Сначала привяжите карту для пополнения баланса</p>
+            </div>
+            <button class="btn btn-primary" onclick="showTopupModal()" id="topupBtn" disabled>
+                <i class="fas fa-plus"></i>
+                Пополнить
+            </button>
+        </div>
+    </div>
+
+    <div class="transaction-history">
+        <h2>История операций</h2>
+        <ul class="transaction-list" id="transactionList">
+            <!-- Транзакции будут добавлены через JavaScript -->
+        </ul>
+    </div>
+</div>
+
+<!-- Модальное окно пополнения -->
+<div class="modal" id="topupModal">
+    <div class="modal-content">
+        <h2>Пополнение баланса</h2>
+        <form id="topupForm" onsubmit="handleTopup(event)">
+            <div class="form-group">
+                <label for="amount">Сумма пополнения (₸)</label>
+                <input type="number" id="amount" min="100" step="100" required>
+            </div>
+            <div class="form-group">
+                <label>Карта списания</label>
+                <div id="cardForPayment" class="card-info" style="background: #f8f8f8; color: #333;"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Пополнить</button>
+        </form>
+    </div>
+</div>
+
+<div class="notification" id="notification"></div>
+
+<script>
+    // Функция для показа уведомлений
+    function showNotification(message, type = 'success') {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.background = type === 'success' ? '#4CAF50' : '#f44336';
+        notification.style.display = 'block';
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }
+
+    // Получение данных карты
+    function getLinkedCard() {
+        const cardData = localStorage.getItem('linkedCard');
+        return cardData ? JSON.parse(cardData) : null;
+    }
+
+    // Обновление информации о привязанной карте
+    function updateCardInfo() {
+        const cardInfo = document.getElementById('linkedCardInfo');
+        const topupBtn = document.getElementById('topupBtn');
+        const topupMessage = document.getElementById('topupMessage');
+        const cardData = getLinkedCard();
+
+        if (cardData) {
+            cardInfo.innerHTML = `
+                <div class="card-number">**** **** **** ${cardData.number.slice(-4)}</div>
+                <div>Срок действия: ${cardData.expiry}</div>
+            `;
+            document.getElementById('cardForPayment').innerHTML = cardInfo.innerHTML;
+            topupBtn.disabled = false;
+            topupMessage.textContent = 'Выберите сумму для пополнения';
+        } else {
+            cardInfo.innerHTML = `
+                <div class="card-number">Нет привязанной карты</div>
+                <small>Перейдите в раздел "Мои карты" для привязки карты</small>
+            `;
+            topupBtn.disabled = true;
+            topupMessage.textContent = 'Сначала привяжите карту для пополнения баланса';
+        }
+    }
+
+    // Показ модального окна пополнения
+    function showTopupModal() {
+        document.getElementById('topupModal').style.display = 'block';
+    }
+
+    // Закрытие модального окна
+    window.onclick = function(event) {
+        const modal = document.getElementById('topupModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    // Обработка пополнения
+    function handleTopup(event) {
+        event.preventDefault();
+        const amount = Number(document.getElementById('amount').value);
+
+        // Получаем текущий баланс
+        let balance = Number(localStorage.getItem('walletBalance')) || 0;
+        balance += amount;
+
+        // Сохраняем новый баланс
+        localStorage.setItem('walletBalance', balance);
+
+        // Добавляем транзакцию
+        addTransaction({
+            type: 'income',
+            amount: amount,
+            date: new Date(),
+            description: 'Пополнение баланса'
+        });
+
+        // Обновляем отображение
+        updateBalance();
+        document.getElementById('topupModal').style.display = 'none';
+        showNotification(`Баланс успешно пополнен на ${amount} ₸`);
+    }
+
+    // Обновление баланса
+    function updateBalance() {
+        const balance = Number(localStorage.getItem('walletBalance')) || 0;
+        document.querySelector('.wallet-balance').textContent = `${balance.toLocaleString()} ₸`;
+    }
+
+    // Добавление транзакции
+    function addTransaction(transaction) {
+        let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+        transactions.unshift(transaction);
+        localStorage.setItem('transactions', JSON.stringify(transactions));
+        updateTransactionHistory();
+    }
+
+    // Обновление истории транзакций
+    function updateTransactionHistory() {
+        const transactionList = document.getElementById('transactionList');
+        const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+        transactionList.innerHTML = transactions.map(t => `
+            <li class="transaction-item">
+                <div class="transaction-info">
+                    <div class="transaction-icon ${t.type}">
+                        <i class="fas fa-${t.type === 'income' ? 'plus' : 'minus'}"></i>
+                    </div>
+                    <div>
+                        <div>${t.description}</div>
+                        <small>${new Date(t.date).toLocaleString()}</small>
+                    </div>
+                </div>
+                <div style="color: ${t.type === 'income' ? '#4CAF50' : '#f44336'}">
+                    ${t.type === 'income' ? '+' : '-'} ${t.amount.toLocaleString()} ₸
+                </div>
+            </li>
+        `).join('') || '<li>Нет операций</li>';
+    }
+
+    // Инициализация страницы
+    document.addEventListener('DOMContentLoaded', () => {
+        updateCardInfo();
+        updateBalance();
+        updateTransactionHistory();
+    });
+</script>
+</body>
+</html>
